@@ -1,0 +1,5 @@
+This file contains some useful links to the webpage project
+
+Fonts:
+  https://fontlibrary.org/
+  https://fonts.google.com/
