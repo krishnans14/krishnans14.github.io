@@ -23,7 +23,7 @@ github_username: krishnans14
 # use_math: true
 
 # this setting allows you to keep pages organized in the _pages folder
-include: ['_pages']
+# include: ['_pages']
   
     
 # highlighter: rouge
