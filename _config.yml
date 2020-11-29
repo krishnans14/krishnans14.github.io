@@ -1,5 +1,53 @@
-theme: jekyll-theme-minimal
+# theme: jekyll-theme-minimal
 
 title: Krishnan Srinivasarengan's page
-description:  PhD in Automatic Control. Exploring the work using data, models and intuition
+description:  #PhD in Automatic Control. Exploring the work using data, models and intuition
 github_username: krishnans14
+
+
+# -----------------------------------------------------------------------------
+# Social integration
+# -----------------------------------------------------------------------------
+github_username: krishnans14
+twitter_username: krishnans14
+linkedin_username: krishnans14
+scholar_userid: lpa9YmMAAAAJ
+orcid_id: 0000-0002-9258-8475
+medium_username: # your Medium username
+quora_username: # your Quora username
+publons_id: # your ID on Publons
+research_gate_profile: # your profile on ResearchGate
+blogger_url: # your blogger URL
+
+
+use_math: true
+
+# this setting allows you to keep pages organized in the _pages folder
+include:
+  - _pages
+  
+  
+  # Everything below here should be left alone. Modifications may break fastpages
+future: true
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-gist
+  - jekyll-octicons
+  - jekyll-toc
+  - jekyll-twitter-plugin
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jemoji
+  
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  math_engine: katex
+  input: GFM
+  auto_ids: true
+  hard_wrap: false
+  syntax_highlighter: rouge
