@@ -1,4 +1,4 @@
-# theme: jekyll-theme-minimal
+theme: jekyll-theme-minimal
 
 title: Krishnan Srinivasarengan's page
 description:  #PhD in Automatic Control. Exploring the work using data, models and intuition
@@ -27,9 +27,8 @@ include:
   - _pages
   
   
-  # Everything below here should be left alone. Modifications may break fastpages
 future: true
-theme: minima
+# theme: minima
 plugins:
   - jekyll-feed
   - jekyll-gist
