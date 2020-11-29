@@ -26,8 +26,8 @@ github_username: krishnans14
 include: ['_pages']
   
     
-highlighter: rouge
-markdown: kramdown
+# highlighter: rouge
+# markdown: kramdown
 # kramdown:
 #   math_engine: katex
 #   input: GFM
