@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ✏️ --> <title>Blog Index</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #f5f2eb;
+    --surface:   #faf8f3;
+    --border:    #ddd8cc;
+    --text:      #1a1a18;
+    --muted:     #6b6860;
+    --accent:    #2a5c3f;
+    --accent-lt: #e8f2ec;
+    --serif:     'Source Serif 4', Georgia, serif;
+    --mono:      'DM Mono', monospace;
+  }
+
+  body {
+    font-family: var(--serif);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 1.5rem 6rem;
+    font-size: 18px;
+  }
+
+  /* ── Nav ── */
+  nav {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1.2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--accent); }
+  nav .sep { opacity: 0.4; }
+
+  /* ── Post header ── */
+  .post-header {
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+  }
+  .post-header h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .post-header h1 em { font-style: italic; color: var(--accent); }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem 1.2rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .tag {
+    background: var(--accent-lt);
+    color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  /* ── Article body ── */
+  article {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  article > * + * { margin-top: 1.4rem; }
+
+  article p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  article h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin-top: 2.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  article h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 2rem;
+  }
+
+  article a { color: var(--accent); text-underline-offset: 2px; }
+  article a:hover { opacity: 0.75; }
+
+  article strong { font-weight: 600; }
+  article em     { font-style: italic; }
+
+  /* Lists */
+  article ul, article ol {
+    padding-left: 1.6rem;
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+  article li + li { margin-top: 0.3rem; }
+
+  /* Inline code */
+  article code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+  }
+
+  /* Code block */
+  article pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    line-height: 1.65;
+    /* optional: label the language */
+    position: relative;
+  }
+  article pre code {
+    font-family: var(--mono);
+    font-size: 0.84rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+  }
+
+  /* Prism token colours — tuned for the warm palette */
+  .token.comment, .token.prolog                { color: #948e80; font-style: italic; }
+  .token.keyword, .token.operator              { color: #2a5c3f; font-weight: 500; }
+  .token.string, .token.char, .token.attr-value{ color: #8a3800; }
+  .token.number, .token.boolean                { color: #1a4a7a; }
+  .token.function                              { color: #2a5c3f; }
+  .token.class-name                            { color: #5a3e85; }
+  .token.punctuation, .token.delimiter         { color: #8a8070; }
+  .token.builtin                               { color: #006060; }
+  .token.attr-name, .token.tag                 { color: #1a4a7a; }
+  .token.selector                              { color: #5a3e85; }
+  .token.property                              { color: #2a5c3f; }
+
+  /* Blockquote */
+  article blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 0.5rem 1.2rem;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 1.05rem;
+    background: var(--surface);
+    border-radius: 0 6px 6px 0;
+  }
+  article blockquote p { margin: 0; }
+
+  /* Callout boxes */
+  .callout {
+    background: var(--accent-lt);
+    border: 1px solid #c0dac8;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .callout.warn {
+    background: #fff8ec;
+    border-color: #e8c88a;
+    border-left-color: #c45c00;
+  }
+  .callout.warn .callout-label { color: #c45c00; }
+
+  /* Horizontal rule */
+  article hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* Figure / image */
+  article figure { margin: 0; }
+  article figure img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  article figcaption {
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* Display math spacing */
+  article .katex-display { overflow-x: auto; padding: 0.25rem 0; }
+
+  /* ── Footer ── */
+  footer {
+    max-width: 680px;
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">krishnans14.github.io</a>
+  <span class="sep">/</span>
+  <a href="/blog/">Blog</a>
+  <span class="sep">/</span>
+  <!-- ✏️ Short breadcrumb label -->
+  <span>Blog Index</span>
+</nav>
+
+<header class="post-header">
+  <!-- ✏️ Use <em> for the italic/accent portion of the title -->
+  <h1> Blog Index </h1>
+
+  <div class="post-meta">
+    <!-- ✏️ -->
+    <span>8 June 2026</span>
+    <!-- <span>5 min read</span> -->
+    <!-- ✏️ Add / remove tags as needed -->
+    <!-- <span class="tag">Category</span> -->
+    <!-- <span class="tag">Tag</span> -->
+  </div>
+</header>
+
+<article>
+
+<!--
+════════════════════════════════════════════════════════
+  QUICK REFERENCE  (delete before publishing)
+════════════════════════════════════════════════════════
+
+PARAGRAPH
+  <p>Text here.</p>
+
+HEADINGS
+  <h2>Section</h2>
+  <h3>Sub-section</h3>
+
+INLINE CODE
+  The <code>variable_name</code> holds the result.
+
+CODE BLOCK  — set language-* for highlighting
+  <pre><code class="language-python">
+def greet(name):
+    return f"Hello, {name}!"
+  </code></pre>
+
+  Common languages: python  javascript  bash  html  css  json  r  latex
+
+INLINE MATH  (standard LaTeX, wrapped in $ … $)
+  The energy equation $E = mc^2$ is well known.
+
+DISPLAY MATH  (centred block, wrapped in $$ … $$)
+  $$\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}$$
+
+BLOCKQUOTE
+  <blockquote><p>Something worth quoting.</p></blockquote>
+
+NOTE CALLOUT
+  <div class="callout">
+    <div class="callout-label">Note</div>
+    <p>Something to highlight.</p>
+  </div>
+
+WARNING CALLOUT
+  <div class="callout warn">
+    <div class="callout-label">Warning</div>
+    <p>Something to be careful about.</p>
+  </div>
+
+IMAGE WITH CAPTION
+  <figure>
+    <img src="images/my-chart.png" alt="Chart description">
+    <figcaption>Figure 1 — Caption text.</figcaption>
+  </figure>
+
+LISTS
+  <ul>
+    <li>Bullet item</li>
+  </ul>
+  <ol>
+    <li>Numbered item</li>
+  </ol>
+
+SECTION BREAK
+  <hr>
+
+LINK
+  <a href="https://example.com">link text</a>
+
+════════════════════════════════════════════════════════
+-->
+
+  <!-- Write your post below -->
+
+  <p> This is the front page for my Blog posts</p>
+
+  <h2><a href="01_luxembourgish-level-checker-meaning.html">Luxembourgish Level Checker with Meaning - Ver 1</a></h2>
+
+  <p>I had been trying to do this for a while now. I wrote the first version in Python and Streamlit and felt it was an overkill. This led to the current version written in HTML+JS</a> </p>
+
+</article>
+
+<footer>
+  <span>© 2026 Krishnan Srinivasarengan</span>
+  <a href="/blog/">← All posts</a>
+</footer>
+
+<!-- Prism — syntax highlighting (autoloader fetches grammars on demand) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<!-- KaTeX — math rendering ($…$ inline, $$…$$ display) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('article'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true  },
+      { left: '$',  right: '$',  display: false },
+    ],
+    throwOnError: false
+  });
+</script>
+
+</body>
+</html>
